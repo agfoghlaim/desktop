@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Synth</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="shapes">
+				<button class="button square change-oscillator" data-shape="square">square</button>
+				<button class="button sine change-oscillator" data-shape="sine">sine</button>
+				<button class="button triangle change-oscillator" data-shape="triangle">triangle</button>
+				<button class="button sawtooth change-oscillator" data-shape="sawtooth">sawtooth</button>
+			</div>
+
+			<div class="drums">
+			    <div data-key="65" class="key">
+			      <kbd>G</kbd>
+			      <span class="drum">snare</span>
+			    </div>
+			    <div data-key="32" class="key">
+			      <kbd>space</kbd>
+			      <span class="drum">kick</span>
+			    </div>
+			    <div data-key="83" class="key">
+			      <kbd>J</kbd>
+			      <span class="drum">hat</span>
+			    </div>
+			    <div data-key="68" class="key">
+			      <kbd>K</kbd>
+			      <span class="drum">tin</span>
+			    </div>
+			</div>
+			<audio data-key="65" src="drums/snare.wav"></audio>
+			<audio data-key="32" src="drums/kick.wav"></audio>
+			<audio data-key="83" src="drums/hat.wav"></audio>
+			<audio data-key="68" src="drums/tin.wav"></audio>
+
+
+			<div class="keyboard">
+				<div class="key change-oscillator" data-frequency="130.8" data-note="C3">C</div>
+				<div class="key change-oscillator" data-frequency="138.6" data-note="Db">Db</div>
+				<div class="key change-oscillator" data-frequency="146.8" data-note="D3">D</div>
+				<div class="key change-oscillator" data-frequency="155.6" data-note="Eb">Eb</div>
+				<div class="key change-oscillator" data-frequency="164.8" data-note="E">E</div>
+				<div class="key change-oscillator" data-frequency="174.6" data-note="F">F</div>
+				<div class="key change-oscillator" data-frequency="185.0" data-note="Gb">Gb</div>
+				<div class="key change-oscillator" data-frequency="196.0" data-note="G">G</div>
+				<div class="key change-oscillator" data-frequency="207.7" data-note="A">A</div>
+				<div class="key change-oscillator" data-frequency="220.0" data-note="Bb">Bb</div>
+				<div class="key change-oscillator" data-frequency="233.1" data-note="B">B</div>
+				<div class="key change-oscillator" data-frequency="246.9" data-note="C4">C</div>
+			</div>
+		</div>
+
+	<script>
+
+		const Options = {
+			type: 'square', 
+			detune: 0,
+			frequency: 130.8
+			
+		}
+
+		const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		let oscillator;
+		
+		function playNoise(Options){
+			oscillator = new OscillatorNode(audioCtx, Options);
+			oscillator.connect(audioCtx.destination);
+			oscillator.start();
+		}
+
+
+
+		function setShape(e){
+			Options.type = e.target.dataset.shape;
+		}
+
+		function setNote(e){
+			Options.frequency = e.target.dataset.frequency;
+			playNoise(Options);
+		}
+
+		function stopNote(e){
+			oscillator.stop(audioCtx.currentTime); ; 
+	     	oscillator.disconnect(); 
+		}
+
+		function playDrum(e){
+			const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+		    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+		    if (!audio) return;
+		    audio.currentTime = 0;
+		    audio.play();
+		}
+
+		document.querySelectorAll('.shapes').forEach(shape => shape.addEventListener('click', setShape));
+		document.querySelectorAll('.key').forEach(key => key.addEventListener('mouseenter', setNote));
+		document.querySelectorAll('.key').forEach(key => key.addEventListener('mouseleave', stopNote));
+		document.querySelectorAll('.drum').forEach(drum => addEventListener('keydown', playDrum));
+
+	</script>	
+	</body>
+</html>

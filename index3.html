@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="assets/style.css">
+	<title>Moh</title>
+	<style>
+
+	/*draggable*/
+*{
+	box-sizing:border-box;
+}
+	.hold{
+		border:solid blue 4px;
+	}
+
+	.hovered{
+		background: #ccc;
+	}
+	.invisible .file img{
+		display: none !important;
+	}
+
+/*
+	end draggable*/
+	.container{
+		display: grid;
+		height: 100%;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: 2fr 2fr 2fr 2fr 1fr;
+		grid-gap: 20px;
+		grid-template-areas: 
+		"space-1 space-2 space-3 space-4 space-5" 
+		"space-6 space-7 space-8 space-9 space-10"
+		"space-11 space-12 space-13 space-14 space-15"
+		"space-16 space-17 space-18 space-19 space-20"
+		"taskbar taskbar taskbar taskbar taskbar";
+	}
+	
+/*	.files{
+		display:grid;
+
+	}
+*/
+.file{
+	color:red;
+}
+	.modals{
+		display: grid;
+	}
+	.file.file-1 {
+		display:grid;
+    	grid-area: file-4;
+	}
+
+	.file.file-2 {
+		display:grid;
+    	grid-area: file-16;
+	}
+		.file.file-3 {
+			display:grid;
+    	grid-area: file-7;
+	}
+		.file.file-4 {
+			display:grid;
+    	grid-area: file-2;
+	}
+			.file.file-5 {
+				display:grid;
+    	grid-area: file-1;
+	}
+
+	.file img{
+		width: 60px;
+	}
+
+	.item-p{
+		font-size: 16px;
+		text-align: left;
+		color: #fffeee;
+		margin: 0;
+		font-family: Tahmoa;
+		text-shadow: 1px 1px 1px #0000004d;
+	}
+
+
+	.modal{
+
+		border: 3px solid black;
+		grid-template-rows: 30px 1fr;
+		grid-template-areas: "bar""main";
+	}
+	.modal-main{
+		background:#fffeee; 
+	}
+	.bar{
+		grid-area:bar;
+		background: #d4d0c7;
+	}
+
+	.modal-1, .modal-2, .modal-3, .modal-4, .modal-5{
+				position: fixed;
+		width:30%;
+		height:30%;
+		display:none;
+	}
+
+	
+	.modal-close{
+		border-radius: 0px;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		height: 20px;
+		line-height: 18px
+	}
+/*	taskbar
+*/
+.task-bar{
+	display: grid;
+	background: #d4d0c7;
+	grid-template-columns: 120px 100px 100px 100px 1fr;
+/*	position: fixed;
+	bottom: 0;
+	left: 0;*/
+	width: 100%;
+	grid-area: taskbar;
+	padding: 5px;
+}
+
+p.clock-p{
+	text-align: right;
+	font-size: 16px;
+	font-weight: 400;
+}
+span.clock{
+
+}
+
+
+.start-btn{
+	border-radius: 0px;
+	background: url(img/Galway_Bus_Spotter_36px.png);
+    background-repeat: repeat;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+	background-position: left;
+	background-repeat: no-repeat;
+	width: 60%;
+	height: 40px;
+	text-align: right;
+	font-weight: bold;
+}
+
+.explorer-btn{
+background-image: url(./img/file.png);
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+width: 40px;
+height: 40px;
+display: block;
+	
+
+}
+
+/*start-menu
+*/
+.start-menu{
+	position: fixed;
+	bottom:61px;
+	left:2px;
+	display: none;
+	grid-template-rows: 1fr 1fr 1fr;
+	background: #d4d0c7;
+	width: 150px;
+}
+
+.start-menu.show{
+	display: grid;
+}
+
+.start-item{
+	display:grid;
+}
+
+.start-item p{
+	font-size: 14px;
+    font-weight: 300;
+    padding: 10px;
+    border-bottom: 0.5px solid;
+    height: 100%;
+    margin: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+/*contextMenu
+*/
+.context-menu{
+
+}
+.context-menu-item{
+
+}
+.editable{
+	border:3px solid red;
+}
+
+	.context-1, .context-2, .context-3, .context-4, .context-5{
+	position: fixed;
+    top: 15px;
+    background: #d4d0c7;
+    width: 150px;
+    display: none;
+}
+.context-3:hover{
+
+}
+	
+	}
+
+</style>
+</head>
+<body>
+	<div class="container">
+		
+			<div class="space space-1 emptySpace"></div>
+			<div class="space space-2 emptySpace"></div>
+			<div class="space space-3 emptySpace"></div>
+			<div class="space space-4 emptySpace"></div>
+			<div class="space space-5 emptySpace"></div>
+			<div class="space space-6 emptySpace"></div>
+			<div class="space space-7 emptySpace"></div>
+			<div class="space space-8 emptySpace"></div>
+			<div class="space space-9 emptySpace"></div>
+			<div class="space space-10 emptySpace"></div>
+			<div class="space space-11 emptySpace"></div>
+			<div class="space space-12 emptySpace"></div>
+			<div class="space space-13 emptySpace"></div>
+			<div class="space space-14 emptySpace"></div>
+			<div class="space space-15 emptySpace"></div>
+			<div class="space space-16 emptySpace"></div>
+			<div class="space space-17 emptySpace"></div>
+			<div class="space space-18 emptySpace"></div>
+			<div class="space space-19 emptySpace"></div>
+			<div class="space space-20 emptySpace"></div>
+		
+
+			<div class="start-menu">
+				<div class="start-item">
+					<p class="menu-item-p">
+						<a href="file:///C:/Users/me/Desktop/dtop/synth.html">Synthesyser</a>
+					</p>
+				</div>
+				<div class="start-item">
+					<p class="menu-item-p">All Gimmicks</p>
+				</div>
+				<div class="start-item">
+					<p class="menu-item-p">item</p>
+				</div>
+			</div>
+
+			<div class="task-bar">
+				<div class="task-item">
+					<button class="start-btn">Start</button>
+				</div>
+				<div class="task-item">
+					<a class="explorer-btn"></a>
+				</div>
+				<div class="task-item">
+					<button>Hi</button>
+				</div>
+				<div class="task-item">
+					<button>Hi</button>
+				</div>
+				<div class="task-item">
+					<p class="clock-p"><span class="clock"></span></p>
+				</div>
+			</div>
+
+
+	</div><!-- end container -->
+
+
+
+<script>
+function clock(){
+	let d = new Date() ;
+	d.setTime( d.getTime() - new Date().getTimezoneOffset()*60*1000 );
+	document.querySelector('.clock').textContent = d.toUTCString().substr(17,5)
+} 
+let startClock = setInterval(clock, 1000);
+
+
+const myFolders = [
+{
+	img: "img/file.png",
+	p:"Marie's CV",
+	modalContent: "modal one",
+	dataModal: "modal-1",
+	theClass: "file-1",
+	contextClass: "context-1" 
+},
+{
+	img: "img/file.png",
+	p:"Marie's Other Folder",
+	modalContent: "modal two",
+	dataModal: "modal-2",
+	theClass: "file-2",
+	contextClass: "context-2" 
+},
+{
+	img: "img/file.png",
+	p:"Marie's 3",
+	modalContent: "modal 3",
+	dataModal: "modal-3",
+	theClass: "file-3",
+	contextClass: "context-3" 
+},
+{
+	img: "img/file.png",
+	p:"Marie's 4",
+	modalContent: "modal 4",
+	dataModal: "modal-4",
+	theClass: "file-4",
+	contextClass: "context-4" 
+},
+{
+	img: "img/file.png",
+	p:"Marie's Other Folder",
+	modalContent: "modal 5",
+	dataModal: "modal-5",
+	theClass: "file-5",
+	contextClass: "context-5" 
+}
+];
+
+//populate
+const spaces = document.querySelectorAll('.space');
+myFolders.forEach(folder => {
+	
+	for (let i=0;i<myFolders.length;i++){
+			spaces[i].classList.replace("emptySpace", "filledSpace");
+			
+		spaces[i].innerHTML = `
+			<div draggable="true" class="file `+myFolders[i].theClass+`" data-modal=`+myFolders[i].dataModal+` data-context=`+myFolders[i].contextClass+` >
+				<img src="img/file.png" alt="">
+				<p class="item-p" id="`+myFolders[i].contextClass+`">`+myFolders[i].p+`</p>
+				<div class="modal `+myFolders[i].dataModal+`">
+					<div class="bar">
+						<button class="modal-close">x</button>
+					</div>
+					<div class="modal-main">
+					<p>`+myFolders[i].modalContent+`</p>
+					</div>	
+				</div>
+				<div class="context-menu `+myFolders[i].contextClass+`" data-context=`+myFolders[i].contextClass+`>
+					<div class="context-menu-item" data-context=`+myFolders[i].contextClass+`>
+						<p class="context-menu-p" data-context=`+myFolders[i].contextClass+`>rename</p>
+					</div>
+				</div>
+			</div>`;
+	}
+});
+
+//draggable
+	//let dragProcess.html='';
+	let dragProcess = {
+		html: '',
+		inProgress:true,
+		droppedSafe:false
+	}
+
+function dragStart(e){
+	console.log("start")
+	dragProcess.html = '';
+	if(e.target.matches('img')){
+		console.log("an image");
+		dragProcess.droppedSafe = false;
+		dragProcess.html = e.target.parentElement.parentElement.innerHTML;
+	}
+
+}
+
+function dragEnd(e){
+	console.log("end")
+
+	e.preventDefault();
+	//console.log(dragProcess.droppedSafe === true);
+	//console.log(e.target)
+	 if(dragProcess.droppedSafe === true){
+	 	e.target.parentElement.parentElement.classList.replace("filledSpace", "emptySpace");
+	 	e.target.parentElement.parentElement.innerHTML = '';	
+	 }
+}
+
+function dragOver(e){
+	//console.log("over")
+	//console.log("over ", e.target);
+	e.preventDefault();
+}
+
+function dragDrop(e){
+	//console.log("the target is ", e.target)
+	//console.log("drop", dragProcess.html==='')
+	//console.log(e.target.classList.contains('emptySpace'),dragProcess.html !== '');
+	console.log("an empty space, class list is ", e.target.classList);
+	if(e.target.classList.contains('emptySpace') && dragProcess.html !== ''){
+		e.target.innerHTML = dragProcess.html;
+		e.target.classList.replace("emptySpace", "filledSpace");
+		dragProcess.droppedSafe = true;
+	}
+	e.preventDefault();
+}
+
+function contextMenu(e){
+	e.preventDefault();
+	let context = this.dataset.context;
+	console.log("context is " ,context)
+	document.querySelector(`.${this.dataset.context}`).style.display = 'grid';
+
+}
+
+
+//toggle close context menus
+function closeContextMenu(e){
+	if( e.target.hasAttribute('data-context')){
+		console.log("does it?? ", e.target.classList)
+		return;
+	}
+	document.querySelectorAll('.context-menu').forEach(item => item.style.display = 'none');
+}
+document.addEventListener('click', closeContextMenu);
+const files = document.querySelectorAll('.file').forEach(file => file.addEventListener('contextmenu', contextMenu));
+//spaces.forEach(space => space.addEventListener('contextmenu', contextMenu));
+//rename
+function letRename(e){
+
+	if(e.target.classList.contains('context-menu-p')){
+			console.log("hhjhjhjhjh", e.target.dataset.context)
+
+	}
+
+	var j = document.getElementById(`${e.target.dataset.context}`);
+	if(j){
+		j.setAttribute('contenteditable', true)
+	j.classList.add('editable')
+	console.log("j ", j)
+	e.target.style.display = 'none';	
+	}
+	return;
+
+	// console.log("this ", this.dataset.context.substr(8,1))
+	// var m=document.querySelector(`.file-${this.dataset.context.substr(8,1)}`);
+	// console.log(m.querySelector('.item-p'))
+	// m.querySelector('.item-p').createAttribute('contenteditable');
+	// this.style.display = 'none';
+}
+document.querySelectorAll('.space').forEach(space => space.addEventListener('click', letRename));
+//document.addEventListener('click', letRename)
+
+
+const container = document.querySelector('.container');
+container.addEventListener('dragstart', dragStart);
+container.addEventListener('dragend', dragEnd); //change class filled empty
+container.addEventListener('dragover', dragOver); //prevent default
+container.addEventListener('drop', dragDrop); //emptySpace
+container.addEventListener('dblclick', openModal);
+container.addEventListener('click', closeModal);
+
+
+
+
+	function openModal(e){
+		if(!e.target.matches('img')){
+			return;
+		}
+		document.querySelector( `.${e.target.parentNode.dataset.modal}`)
+		.style.display = 'grid';
+
+	}
+
+	function closeModal(e){
+		console.log(e.target)
+		if(!e.target.classList.contains('modal-close')){
+			return;
+		}
+		e.target.parentElement.parentElement.style.display = 'none';
+	}
+//resize modal
+//document.querySelector('modal').forEach(mod => mod.addEventListener(''))
+
+// start menu
+function toggleStartMenu(e){
+	if( e.target.classList.contains('start-menu') ||
+		e.target.classList.contains('menu-item') || 
+		e.target.classList.contains('menu-item-p')){
+		return;
+	}
+
+	let menu = document.querySelector('.start-menu');
+	if(e.target.classList.contains('start-btn')){
+		menu.classList.toggle('show');
+	}else{
+		menu.classList = 'start-menu';	
+	}
+}
+document.addEventListener('click', toggleStartMenu);
+
+
+</script>
+</body>
+
+
+</html>
